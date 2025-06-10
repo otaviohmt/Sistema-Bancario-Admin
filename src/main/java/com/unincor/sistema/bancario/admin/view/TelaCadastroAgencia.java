@@ -18,12 +18,21 @@ import javax.swing.JOptionPane;
 public class TelaCadastroAgencia extends javax.swing.JDialog {
 
     private final AgenciaService agenciaService = new AgenciaService();
+    private ChamadaRetorno chamadaRetorno;
     /**
      * Creates new form TelaCadastroAgencia
      */
     public TelaCadastroAgencia(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(parent);
+    }
+    
+    public TelaCadastroAgencia(java.awt.Dialog parent, boolean modal, ChamadaRetorno chamadaRetorno) {
+        super(parent, modal);
+        initComponents();
+        setLocationRelativeTo(parent);
+        this.chamadaRetorno = chamadaRetorno;
     }
 
     /**
@@ -85,10 +94,9 @@ public class TelaCadastroAgencia extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jTCidade, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTCodigoAgencia, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTCodigoAgencia)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTUF, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -97,7 +105,7 @@ public class TelaCadastroAgencia extends javax.swing.JDialog {
                     .addComponent(jTNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTCep, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(162, Short.MAX_VALUE))
+                .addContainerGap(191, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -159,6 +167,9 @@ public class TelaCadastroAgencia extends javax.swing.JDialog {
         try {
             Agencia agencia = construirAgenciaView();
             agenciaService.salvarAgencia(agencia);
+            JOptionPane.showMessageDialog(this, "Salvo com sucesso");
+            chamadaRetorno.execute();
+            dispose();
         } catch (CadastroException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(),
                     "Erro", JOptionPane.ERROR_MESSAGE);
