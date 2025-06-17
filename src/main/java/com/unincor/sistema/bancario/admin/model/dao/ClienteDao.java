@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class ClienteDao {
     
     public void inserirCliente(Cliente cliente) {
@@ -47,10 +46,10 @@ public class ClienteDao {
         return clientes;
     }
     
-     public Cliente buscarClientePorId(Long idCliente){
-        String sql = "SELECT * FROM clientes WHERE id_cliente = ?";
+     public Cliente buscarClientePorCpf(String cpf){
+        String sql = "SELECT * FROM clientes WHERE cpf = ?";
         try(Connection con = MySQL.connect();PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setLong(1, idCliente);
+            ps.setString(1, cpf);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 return construirClienteSql(rs);
@@ -74,17 +73,17 @@ public class ClienteDao {
     }
             
     public static void main(String[] args) {
-        //Cliente cliente = new Cliente(null, "Brayan", "8899222444", LocalDate.now(),
-                //"brayan@gmail.com", "112566663", "114444455666");
+        Cliente cliente = new Cliente(null, "Brayan", "8899222444", LocalDate.now(),
+                "brayan@gmail.com", "112566663", "114444455666");
         ClienteDao clienteDao = new ClienteDao();
-        //var clientes = clienteDao.buscarTodosClientes();
-        //System.out.println(clientes);
-        //clientes.forEach(c -> System.out.println("Id: " + c.getId() + " Nome: " + c.getNome() + " CPF: " + c.getCpf() + 
-                //" Data nascimento: " + c.getDataNascimento() + " Email: " + c.getEmail() + " Tel: " + c.getTelefone() +
-                //" Senha hash: " + c.getSenhaHash()));
+        var clientes = clienteDao.buscarTodosClientes();
+        System.out.println(clientes);
+        clientes.forEach(c -> System.out.println("Id: " + c.getId() + " Nome: " + c.getNome() + " CPF: " + c.getCpf() + 
+                " Data nascimento: " + c.getDataNascimento() + " Email: " + c.getEmail() + " Tel: " + c.getTelefone() +
+                " Senha hash: " + c.getSenhaHash()));
                 
-        var c = clienteDao.buscarClientePorId(1l);
-        System.out.println("Id: " + c.getId() + " Nome: " + c.getNome());
+        var c = clienteDao.buscarClientePorCpf("123345699"); //PERGUNTAR PARA O DIOGENES COMO FAZER ISSO, ESTA ACUSANDO ERRO NO CPF(INT)
+        System.out.println("Id: " + c.getId() + " Nome: " + c.getNome() + "CPF: " + c.getCpf());
     }
     
 }

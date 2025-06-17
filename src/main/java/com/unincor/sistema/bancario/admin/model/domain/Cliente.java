@@ -22,9 +22,9 @@ public class Cliente extends Pessoa{
     public Long getId() {
         return idCliente;
     }
-
+    
     public void setId(Long id) {
         this.idCliente = id;
     }
-    
+
 }
