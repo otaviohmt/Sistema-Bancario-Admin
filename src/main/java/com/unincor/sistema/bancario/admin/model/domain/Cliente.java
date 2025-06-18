@@ -27,4 +27,9 @@ public class Cliente extends Pessoa{
         this.idCliente = id;
     }
 
+    @Override
+    public String toString() {
+        return "Cliente{" + "idCliente=" + idCliente + '}';
+    }
+
 }

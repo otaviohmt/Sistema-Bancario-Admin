@@ -37,4 +37,9 @@ public class Funcionario extends Pessoa{
         this.turno = turno;
     }
 
+    @Override
+    public String toString() {
+        return "Funcionario{" + "idFuncionario=" + idFuncionario + ", turno=" + turno + '}';
+    }
+
 }
